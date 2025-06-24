@@ -1,0 +1,100 @@
+app:
+  title: Backstage Fusion App
+  baseUrl: http://localhost:3000
+  experimental:
+    packages: all
+
+  support:
+    url: https://github.com/backstage/backstage/issues
+    items:
+      - title: Issues
+        icon: github
+        links:
+          - url: https://github.com/backstage/backstage/issues
+            title: GitHub Issues
+      - title: Discord Chatroom
+        icon: chat
+        links:
+          - url: https://discord.gg/backstage-687207715902193673
+            title: '#backstage'
+
+  packageName: example-app
+
+backend:
+  # Disable auth for Fusion development
+  auth:
+    dangerouslyDisableDefaultAuthPolicy: true
+
+  # Use localhost for backend in container
+  baseUrl: http://localhost:7007
+  listen:
+    port: 7007
+    host: 0.0.0.0
+  
+  # Use in-memory SQLite for development
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  
+  # CORS configuration for Fusion
+  cors:
+    origin: http://localhost:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  
+  # Content Security Policy
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  
+  # Allow reading from common hosts
+  reading:
+    allow:
+      - host: example.com
+      - host: '*.mozilla.org'
+
+# Organization info
+organization:
+  name: My Company
+
+# TechDocs configuration for development
+techdocs:
+  builder: 'local'
+  generator:
+    runIn: 'docker'
+  publisher:
+    type: 'local'
+
+# Minimal integrations (commented out to avoid external dependencies)
+integrations:
+  # github:
+  #   - host: github.com
+  #     token: ${GITHUB_TOKEN}
+  # gitlab:
+  #   - host: gitlab.com
+  #     token: ${GITLAB_TOKEN}
+
+# Catalog configuration
+catalog:
+  useUrlReadersSearch: true
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow:
+        - Component
+        - API
+        - Resource
+        - System
+        - Domain
+        - Location
+  
+  # Minimal locations for development
+  locations:
+    # Example entities
+    - type: file
+      target: ../catalog-model/examples/all.yaml
+    # Example groups and users
+    - type: file
+      target: ../catalog-model/examples/acme-corp.yaml
+      rules:
+        - allow: [User, Group] 
