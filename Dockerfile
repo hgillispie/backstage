@@ -10,17 +10,14 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     build-essential \
     libsqlite3-dev \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy package files for dependency installation
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-
-# Install dependencies
-RUN yarn install --frozen-lockfile
-
-# Copy the rest of the application
+# Copy the entire repo (including all workspaces)
 COPY . .
+
+# Install dependencies with Yarn
+RUN yarn install --immutable
 
 # Build the application
 RUN yarn build:all
@@ -32,5 +29,5 @@ EXPOSE 3000
 ENV NODE_ENV=development
 ENV PORT=3000
 
-# Start the application
-CMD ["yarn", "dev"] 
+# Start the application (runs both frontend and backend)
+CMD ["yarn", "start"] 
