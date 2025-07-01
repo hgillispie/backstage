@@ -33,7 +33,7 @@
     "build:plugins-report": "node ./scripts/build-plugins-report",
     "clean": "backstage-cli repo clean",
     "create-plugin": "echo \"use 'yarn new' instead\"",
-    "dev": "echo \"use 'yarn start' instead\"",
+    "dev": "backstage-cli repo start",
     "dev:next": "echo \"use 'yarn start:next' instead\"",
     "docker-build": "yarn tsc && yarn workspace example-backend build && yarn workspace example-backend build-image",
     "fix": "backstage-cli repo fix --publish",
@@ -51,7 +51,7 @@
     "release": "node scripts/prepare-release.js && changeset version && yarn prettier --write '{packages,plugins}/*/{package.json,CHANGELOG.md}' '.changeset/*.json' && yarn install --no-immutable",
     "snyk:test": "npx snyk test --yarn-workspaces --strict-out-of-sync=false",
     "snyk:test:package": "yarn snyk:test --include",
-    "start": "backstage-cli repo start",
+    "start": "concurrently \"yarn workspace example-app start\" \"yarn workspace example-backend start\"",
     "start-backend": "echo \"Use 'yarn start example-backend' instead\"",
     "start:microsite": "cd microsite/ && yarn start",
     "start:next": "yarn start example-app-next example-backend",
@@ -63,7 +63,8 @@
     "test:all": "NODE_OPTIONS='--no-node-snapshot --experimental-vm-modules' backstage-cli repo test --coverage",
     "test:e2e": "NODE_OPTIONS=--no-node-snapshot playwright test",
     "tsc": "tsc",
-    "tsc:full": "backstage-cli repo clean && tsc --skipLibCheck false --incremental false"
+    "tsc:full": "backstage-cli repo clean && tsc --skipLibCheck false --incremental false",
+    "heroku-postbuild": "yarn build:all"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
