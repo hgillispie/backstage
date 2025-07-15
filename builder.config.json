@@ -1,5 +1,5 @@
 {
-  "devCommand": "yarn start",
+  "devCommand": "yarn dev",
   "serverUrl": "http://localhost:3000",
   "commitMode": "draft-prs",
   "isLocal": true,
