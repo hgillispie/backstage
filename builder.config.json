@@ -1,0 +1,30 @@
+{
+  "devCommand": "yarn start",
+  "serverUrl": "http://localhost:3000",
+  "commitMode": "draft-prs",
+  "isLocal": true,
+  "allowedCommands": [
+    "yarn *",
+    "npm *",
+    "git diff *",
+    "git log *",
+    "git status *",
+    "echo *",
+    "cd *",
+    "find *",
+    "ls *"
+  ],
+  "workspace": {
+    "folders": [
+      {
+        "path": "./packages/app",
+        "name": "frontend"
+      },
+      {
+        "path": "./packages/backend",
+        "name": "backend"
+      }
+    ]
+  },
+  "command": "yarn start"
+}

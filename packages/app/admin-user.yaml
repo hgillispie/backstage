@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: admin
+  description: System Administrator
+spec:
+  profile:
+    displayName: Admin User
+    email: admin@backstage.local
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: admins
+  description: Administrators group
+spec:
+  type: team
+  profile:
+    displayName: Administrators
+  children: []
+  members:
+    - user:default/admin
